@@ -186,13 +186,14 @@ class IdentificationCodesExportPlugin extends ImportExportPlugin {
 					}
 					$data[0][$codename] = $codename;
 				}
+				
 				// insert identification codes
 				$count = 1;
 				$monographDAO = new MonographDAO;
 				foreach ($identificationCodes as $identificationCode) {
 
 					$submissionId = $identificationCode['subId'];
-					$data[$count]['subId'] = $identificationCode['subId'];
+					$data[$count]['subId'] = $submissionId;
 					$monograph = $monographDAO->getById($submissionId);
 					if ($monograph) {
 						$data[$count]['author'] = $monograph->getFirstAuthor();
@@ -201,13 +202,16 @@ class IdentificationCodesExportPlugin extends ImportExportPlugin {
 
 					$data[$count]['publicationFormat'] = $identificationCode['publicationFormat'];
 					foreach ($selectedIdentificationCodes as $code) {
+												
 						$codename = $onixCodes[$code];
 						// remove id from name
 						$pos = strrpos($codename," ");
 						if ($pos) {
 							$codename = substr($codename,0,$pos);
 						}
-						$data[$count][$codename] =$identificationCode[$code];
+						if (isset($identificationCode[$code])) {
+							$data[$count][$codename] = $identificationCode[$code];
+						}						
 					}
 					$count++;
 				}
