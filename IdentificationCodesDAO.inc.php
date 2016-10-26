@@ -34,13 +34,13 @@ LEFT JOIN submission_settings ss ON ss.submission_id=pf.submission_id WHERE pfs.
 			while (!$result->EOF) {
 				$row = $result->getRowAssoc(false);
 
-				$publicationFormatId = $this->convertFromDB($row['publication_format_id']);
-				$codeId = $this->convertFromDB($row['code']); 
+				$publicationFormatId = $this->convertFromDB($row['publication_format_id'],null);
+				$codeId = $this->convertFromDB($row['code'],null); 
 
-				$identificationCodes[$publicationFormatId]['subId'] = $this->convertFromDB($row['submission_id']);
-				$identificationCodes[$publicationFormatId]['title'] = $this->convertFromDB($row['btitle']); 
-				$identificationCodes[$publicationFormatId]['publicationFormat'] = $this->convertFromDB($row['pfname']);
-				$identificationCodes[$publicationFormatId][$codeId] = $this->convertFromDB($row['value']);
+				$identificationCodes[$publicationFormatId]['subId'] = $this->convertFromDB($row['submission_id'],null);
+				$identificationCodes[$publicationFormatId]['title'] = $this->convertFromDB($row['btitle'],null); 
+				$identificationCodes[$publicationFormatId]['publicationFormat'] = $this->convertFromDB($row['pfname'],null);
+				$identificationCodes[$publicationFormatId][$codeId] = $this->convertFromDB($row['value'],null);
 				$result->MoveNext();
 			}
 			$result->Close();
